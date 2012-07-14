@@ -7,6 +7,13 @@ use warnings;
 our $VERSION = '0.01';
 $VERSION = eval $VERSION;
 
+our %Hosts;
+
+sub register_host {
+    my ($class, $host, $peer_addr) = @_;
+    $Hosts{$host} = $peer_addr;
+}
+
 1;
 
 =encoding utf-8
