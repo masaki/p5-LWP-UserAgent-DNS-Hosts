@@ -3,15 +3,61 @@ package LWP::Protocol::Hosts;
 use 5.008001;
 use strict;
 use warnings;
+use Carp;
+use LWP::Protocol;
+use Guard;
 
 our $VERSION = '0.01';
 $VERSION = eval $VERSION;
+
+our @Protocols = qw(http https);
+our %Implementors;
 
 our %Hosts;
 
 sub register_host {
     my ($class, $host, $peer_addr) = @_;
     $Hosts{$host} = $peer_addr;
+}
+
+sub registered_peer_addr {
+    my ($class, $host) = @_;
+    return $Hosts{$host};
+}
+
+sub _implementor {
+    my ($class, $proto) = @_;
+    return join '::' => $class, $proto;
+}
+
+sub enable_override {
+    my $class = shift;
+
+    for my $proto (@Protocols) {
+        if (my $orig = LWP::Protocol::implementor($proto)) {
+            my $impl = $class->_implementor($proto);
+            if (eval "require $impl; 1") {
+                LWP::Protocol::implementor($proto => $impl);
+                $Implementors{$proto} = $orig;
+            }
+        }
+        else {
+            carp("LWP::Protocol::$proto is unavailable. Skip overriding it.");
+        }
+    }
+
+    if (defined wantarray) {
+        return guard { $class->disable_override };
+    }
+}
+
+sub disable_override {
+    my $class = shift;
+    for my $proto (@Protocols) {
+        if (my $impl = $Implementors{$proto}) {
+            LWP::Protocol::implementor($proto, $impl);
+        }
+    }
 }
 
 1;
@@ -33,7 +79,7 @@ LWP::Protocol::Hosts - Override LWP HTTP/HTTPS request's host like /etc/hosts
       'www.cpan.org' => '127.0.0.1',
   );
 
-  LWP::Protocol::Hosts->override;
+  LWP::Protocol::Hosts->enable_override;
 
   # override request hosts with peer addr defined above
   my $ua  = LWP::UserAgent->new;
@@ -62,19 +108,19 @@ equals to:
 
   LWP::Protocol::Hosts->regiter_hosts('example.com', '127.0.0.1');
 
-=item override
+=item enable_override
 
-  LWP::Protocol::Hosts->override;
-  my $guard = LWP::Protocol::Hosts->override;
+  LWP::Protocol::Hosts->enable_override;
+  my $guard = LWP::Protocol::Hosts->enable_override;
 
 Enables to override hook.
 
 If called in a non-void context, returns a L<Guard> object that
 automatically resets the override when it goes out of context.
 
-=item unoverride
+=item disable_override
 
-  LWP::Protocol::Hosts->unoverride;
+  LWP::Protocol::Hosts->disable_override;
 
 Disables to override hook.
 
