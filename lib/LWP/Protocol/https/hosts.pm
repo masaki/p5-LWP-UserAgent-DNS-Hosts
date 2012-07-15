@@ -1,15 +1,15 @@
-package LWP::Protocol::Hosts::https;
+package LWP::Protocol::https::hosts;
 
 use strict;
 use warnings;
 use parent 'LWP::Protocol::https';
-use LWP::Protocol::Hosts;
+use LWP::UserAgent::DNS::Hosts;
 
 sub _extra_sock_opts {
     my ($self, $host, $port) = @_;
 
     my @opts = $self->SUPER::_extra_sock_opts($host, $port);
-    if (my $peer_addr = LWP::Protocol::Hosts->registered_peer_addr($host)) {
+    if (my $peer_addr = LWP::UserAgent::DNS::Hosts->_registered_peer_addr($host)) {
         push @opts, (PeerAddr => $peer_addr, Host => $host);
     }
 

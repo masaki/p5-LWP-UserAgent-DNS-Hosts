@@ -2,7 +2,7 @@ use strict;
 use Test::More;
 use Test::Fake::HTTPD;
 use LWP::UserAgent;
-use LWP::Protocol::Hosts;
+use LWP::UserAgent::DNS::Hosts;
 
 plan skip_all => 'LWP::Protocol::https required'
     unless eval 'use LWP::Protocol::https; 1';
@@ -22,8 +22,8 @@ plan skip_all => 'HTTP::Daemon::SSL required'
         ];
     };
 
-    LWP::Protocol::Hosts->register_host('www.google.com' => '127.0.0.1');
-    my $guard = LWP::Protocol::Hosts->enable_override;
+    LWP::UserAgent::DNS::Hosts->register_host('www.google.com' => '127.0.0.1');
+    my $guard = LWP::UserAgent::DNS::Hosts->enable_override;
 
     my $uri = sprintf 'https://www.google.com:%s/search?q=foobar' => $httpd->port;
 

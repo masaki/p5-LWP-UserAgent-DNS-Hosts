@@ -1,4 +1,4 @@
-package LWP::Protocol::Hosts;
+package LWP::UserAgent::DNS::Hosts;
 
 use 5.008001;
 use strict;
@@ -20,14 +20,14 @@ sub register_host {
     $Hosts{$host} = $peer_addr;
 }
 
-sub registered_peer_addr {
+sub _registered_peer_addr {
     my ($class, $host) = @_;
     return $Hosts{$host};
 }
 
 sub _implementor {
     my ($class, $proto) = @_;
-    return join '::' => $class, $proto;
+    return sprintf 'LWP::Protocol::%s::hosts' => $proto;
 }
 
 sub enable_override {
@@ -68,18 +68,18 @@ sub disable_override {
 
 =head1 NAME
 
-LWP::Protocol::Hosts - Override LWP HTTP/HTTPS request's host like /etc/hosts
+LWP::UserAgent::DNS::Hosts - Override LWP HTTP/HTTPS request's host like /etc/hosts
 
 =head1 SYNOPSIS
 
   use LWP::UserAgent;
-  use LWP::Protocol::Hosts;
+  use LWP::UserAgent::DNS::Hosts;
 
-  LWP::Protocol::Hosts->register_host(
+  LWP::UserAgent::DNS::Hosts->register_host(
       'www.cpan.org' => '127.0.0.1',
   );
 
-  LWP::Protocol::Hosts->enable_override;
+  LWP::UserAgent::DNS::Hosts->enable_override;
 
   # override request hosts with peer addr defined above
   my $ua  = LWP::UserAgent->new;
@@ -88,8 +88,10 @@ LWP::Protocol::Hosts - Override LWP HTTP/HTTPS request's host like /etc/hosts
 
 =head1 DESCRIPTION
 
-LWP::Protocol::Hosts is a module to override HTTP/HTTPS request
+LWP::UserAgent::DNS::Hosts is a module to override HTTP/HTTPS request
 peer addresses that uses LWP::UserAgent.
+
+This module concept was got from L<LWP::Protocol::PSGI>.
 
 =head1 METHODS
 
@@ -97,7 +99,7 @@ peer addresses that uses LWP::UserAgent.
 
 =item register_host($host, $peer_addr)
 
-  LWP::Protocol::Hosts->register_host($host, $peer_addr);
+  LWP::UserAgent::DNS::Hosts->register_host($host, $peer_addr);
 
 Registers a pair of hostname and peer ip address.
 
@@ -106,12 +108,12 @@ Registers a pair of hostname and peer ip address.
 
 equals to:
 
-  LWP::Protocol::Hosts->regiter_hosts('example.com', '127.0.0.1');
+  LWP::UserAgent::DNS::Hosts->regiter_hosts('example.com', '127.0.0.1');
 
 =item enable_override
 
-  LWP::Protocol::Hosts->enable_override;
-  my $guard = LWP::Protocol::Hosts->enable_override;
+  LWP::UserAgent::DNS::Hosts->enable_override;
+  my $guard = LWP::UserAgent::DNS::Hosts->enable_override;
 
 Enables to override hook.
 
@@ -120,7 +122,7 @@ automatically resets the override when it goes out of context.
 
 =item disable_override
 
-  LWP::Protocol::Hosts->disable_override;
+  LWP::UserAgent::DNS::Hosts->disable_override;
 
 Disables to override hook.
 

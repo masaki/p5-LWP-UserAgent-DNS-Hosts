@@ -1,1 +1,1 @@
-lib/LWP/Protocol/Hosts.pm
+lib/LWP/UserAgent/DNS/Hosts.pm

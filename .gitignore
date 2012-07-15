@@ -1,6 +1,6 @@
 blib/
 pm_to_blib
-LWP-Protocol-Hosts-*/
+LWP-UserAgent-DNS-Hosts-*/
 MANIFEST
 MANIFEST.bak
 README

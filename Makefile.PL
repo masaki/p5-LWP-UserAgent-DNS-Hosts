@@ -1,8 +1,8 @@
 use inc::Module::Install;
 
-name 'LWP-Protocol-Hosts';
+name 'LWP-UserAgent-DNS-Hosts';
 license 'perl';
-all_from 'lib/LWP/Protocol/Hosts.pm';
+all_from 'lib/LWP/UserAgent/DNS/Hosts.pm';
 
 requires 'LWP::Protocol';
 requires 'LWP::Protocol::http';
