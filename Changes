@@ -1,5 +1,8 @@
 Revision history for Perl extension LWP::UserAgent::DNS::Hosts
 
+0.03
+        - added parent.pm to dependency
+
 0.02
         - renamed from LWP::Protocol::Hosts
 
