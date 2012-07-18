@@ -1,2 +1,5 @@
-use Test::UseAllModules;
-BEGIN { all_uses_ok(); }
+use Test::More;
+
+use_ok 'LWP::UserAgent::DNS::Hosts';
+
+done_testing;
