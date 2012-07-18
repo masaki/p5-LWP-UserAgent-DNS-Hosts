@@ -20,6 +20,17 @@ sub register_host {
     $Hosts{$host} = $peer_addr;
 }
 
+sub register_hosts {
+    my ($class, %pairs) = @_;
+    while (my ($host, $peer_addr) = each %pairs) {
+        $class->register_host($host, $peer_addr);
+    }
+}
+
+sub clear_hosts {
+    %Hosts = ();
+}
+
 sub _registered_peer_addr {
     my ($class, $host) = @_;
     return $Hosts{$host};
@@ -79,6 +90,11 @@ LWP::UserAgent::DNS::Hosts - Override LWP HTTP/HTTPS request's host like /etc/ho
       'www.cpan.org' => '127.0.0.1',
   );
 
+  LWP::UserAgent::DNS::Hosts->register_hosts(
+      'search.cpan.org' => '192.168.0.100',
+      'pause.perl.org'  => '192.168.0.101',
+  );
+
   LWP::UserAgent::DNS::Hosts->enable_override;
 
   # override request hosts with peer addr defined above
@@ -109,6 +125,20 @@ Registers a pair of hostname and peer ip address.
 equals to:
 
   LWP::UserAgent::DNS::Hosts->regiter_hosts('example.com', '127.0.0.1');
+
+=item register_hosts(%host_addr_pairs)
+
+  LWP::UserAgent::DNS::Hosts->register_hosts(
+      'example.com' => '192.168.0.1',
+      'example.org' => '192.168.0.2',
+      ...
+  );
+
+Registers pairs of hostname and peer ip address.
+
+=item clear_hosts
+
+Clears registered pairs.
 
 =item enable_override
 
