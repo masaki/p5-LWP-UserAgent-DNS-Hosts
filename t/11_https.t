@@ -4,6 +4,10 @@ use Test::Fake::HTTPD;
 use LWP::UserAgent;
 use LWP::UserAgent::DNS::Hosts;
 
+for my $module (qw/ LWP::Protocol::https IO::Socket::SSL /) {
+    plan skip_all => "$module required" unless eval "use $module; 1";
+}
+
 sub _uri {
     my ($uri, $httpd) = @_;
     $uri = URI->new($uri);
