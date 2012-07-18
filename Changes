@@ -1,5 +1,10 @@
 Revision history for Perl extension LWP::UserAgent::DNS::Hosts
 
+0.04
+        - fixed compile test problems
+        - added register_hosts() and clear_hosts()
+        - cleanup all tests
+
 0.03
         - added parent.pm to dependency
 
