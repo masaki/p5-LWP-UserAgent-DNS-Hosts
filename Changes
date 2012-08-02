@@ -1,5 +1,8 @@
 Revision history for Perl extension LWP::UserAgent::DNS::Hosts
 
+0.05
+        - implements read_hosts(), register from "hosts" syntax
+
 0.04
         - fixed compile test problems
         - added register_hosts() and clear_hosts()
