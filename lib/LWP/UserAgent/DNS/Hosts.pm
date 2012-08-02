@@ -31,6 +31,49 @@ sub clear_hosts {
     %Hosts = ();
 }
 
+sub read_hosts {
+    my ($class, $source) = @_;
+
+    if (ref $source eq 'GLOB') {
+        $class->_read_hosts_from_handle($source);
+    }
+    elsif ($source !~ /[\x0D\x0A]/ && -f $source) {
+        $class->_read_hosts_from_file($source);
+    }
+    else {
+        $class->_read_hosts_from_string($source);
+    }
+}
+
+sub _read_hosts_from_handle {
+    my ($class, $handle) = @_;
+    while (<$handle>) {
+        chomp;
+        s/^\s+//g;
+        s/\s+$//g;
+        next if !$_ || /^#/;
+
+        my ($addr, @hosts) = split /\s+/;
+        for my $host (@hosts) {
+            $class->register_host($host, $addr);
+        }
+    }
+}
+
+sub _read_hosts_from_file {
+    my ($class, $file) = @_;
+    open my $fh, '<', $file or croak $!;
+    $class->_read_hosts_from_handle($fh);
+    close $fh;
+}
+
+sub _read_hosts_from_string {
+    my ($class, $string) = @_;
+    open my $fh, '<', \$string or croak $!;
+    $class->_read_hosts_from_handle($fh);
+    close $fh;
+}
+
 sub _registered_peer_addr {
     my ($class, $host) = @_;
     return $Hosts{$host};
@@ -86,14 +129,19 @@ LWP::UserAgent::DNS::Hosts - Override LWP HTTP/HTTPS request's host like /etc/ho
   use LWP::UserAgent;
   use LWP::UserAgent::DNS::Hosts;
 
+  # add entry
   LWP::UserAgent::DNS::Hosts->register_host(
       'www.cpan.org' => '127.0.0.1',
   );
 
+  # add entries
   LWP::UserAgent::DNS::Hosts->register_hosts(
       'search.cpan.org' => '192.168.0.100',
       'pause.perl.org'  => '192.168.0.101',
   );
+
+  # read hosts file
+  LWP::UserAgent::DNS::Hosts->read_hosts('/path/to/my/hosts');
 
   LWP::UserAgent::DNS::Hosts->enable_override;
 
@@ -135,6 +183,17 @@ equals to:
   );
 
 Registers pairs of hostname and peer ip address.
+
+=item read_hosts($file_or_string)
+
+  LWP::UserAgent::DNS::Hosts->read_hosts('hosts.my');
+
+  LWP::UserAgent::DNS::Hosts->read_hosts(<<'__HOST__');
+      127.0.0.1      example.com
+      192.168.0.1    example.net example.org
+  __HOST__
+
+Registers "/etc/hosts" syntax entries.
 
 =item clear_hosts
 

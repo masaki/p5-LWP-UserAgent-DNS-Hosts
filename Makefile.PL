@@ -17,6 +17,7 @@ test_requires 'Test::More' => 0.98;
 test_requires 'Test::UseAllModules';
 test_requires 'Test::Fake::HTTPD' => 0.04;
 test_requires 'LWP::UserAgent';
+test_requires 'File::Temp';
 
 author_tests 'xt';
 auto_set_repository;
