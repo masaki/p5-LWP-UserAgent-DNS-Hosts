@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Carp;
 use LWP::Protocol;
-use Guard;
+use Scope::Guard qw(guard);
 
 our $VERSION = '0.05';
 $VERSION = eval $VERSION;
