@@ -15,7 +15,7 @@ recommends 'HTTP::Daemon::SSL';    # for SSL tests
 tests 't/*.t';
 test_requires 'Test::More' => 0.98;
 test_requires 'Test::UseAllModules';
-test_requires 'Test::Fake::HTTPD' => 0.05;
+test_requires 'Test::Fake::HTTPD' => 0.06;
 test_requires 'LWP::UserAgent';
 test_requires 'File::Temp';
 

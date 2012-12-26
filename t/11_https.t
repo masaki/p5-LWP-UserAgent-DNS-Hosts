@@ -1,9 +1,13 @@
 use strict;
 use Test::More;
-use Test::Fake::HTTPD;
+use Test::Fake::HTTPD 0.06;
 use LWP::UserAgent;
 use LWP::UserAgent::DNS::Hosts;
 
+# server
+plan skip_all => "disable SSL" unless Test::Fake::HTTPD::enable_ssl();
+
+# client
 for my $module (qw/ LWP::Protocol::https IO::Socket::SSL /) {
     plan skip_all => "$module required" unless eval "use $module; 1";
 }
