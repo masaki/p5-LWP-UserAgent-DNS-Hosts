@@ -10,7 +10,11 @@ sub _extra_sock_opts {
 
     my @opts = $self->SUPER::_extra_sock_opts($host, $port);
     if (my $peer_addr = LWP::UserAgent::DNS::Hosts->_registered_peer_addr($host)) {
-        push @opts, (PeerAddr => $peer_addr, Host => $host);
+        push @opts, (
+            PeerAddr          => $peer_addr,
+            Host              => $host,
+            SSL_verifycn_name => $host,
+        );
     }
 
     return @opts;
