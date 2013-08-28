@@ -1,5 +1,8 @@
 Revision history for Perl extension LWP::UserAgent::DNS::Hosts
 
+0.08
+        - override SSL_verifycn_name
+
 0.07
         - fix https test
 
