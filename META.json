@@ -26,16 +26,6 @@
       ]
    },
    "prereqs" : {
-      "build" : {
-         "requires" : {
-            "ExtUtils::MakeMaker" : "6.59",
-            "File::Temp" : "0",
-            "LWP::UserAgent" : "0",
-            "Test::Fake::HTTPD" : "0.06",
-            "Test::More" : "0.98",
-            "Test::UseAllModules" : "0"
-         }
-      },
       "configure" : {
          "requires" : {
             "Module::Build::Tiny" : "0.035"
@@ -58,6 +48,15 @@
             "parent" : "0",
             "perl" : "5.008001"
          }
+      },
+      "test" : {
+         "requires" : {
+            "File::Temp" : "0",
+            "LWP::UserAgent" : "0",
+            "Test::Fake::HTTPD" : "0.06",
+            "Test::More" : "0.98",
+            "Test::UseAllModules" : "0"
+         }
       }
    },
    "release_status" : "unstable",
@@ -72,10 +71,11 @@
          "web" : "https://github.com/masaki/p5-LWP-UserAgent-DNS-Hosts"
       }
    },
-   "version" : "0.09",
+   "version" : "0.10",
    "x_authority" : "cpan:MASAKI",
    "x_contributors" : [
-      "ikasam_a <masaki.nakagawa@gmail.com>"
+      "Tatsuhiko Miyagawa <miyagawa@bulknews.net>",
+      "Masaki Nakagawa <masaki.nakagawa@gmail.com>"
    ],
    "x_serialization_backend" : "JSON::PP version 2.27400"
 }
