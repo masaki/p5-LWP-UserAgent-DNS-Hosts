@@ -2,6 +2,9 @@ Revision history for Perl extension LWP::UserAgent::DNS::Hosts
 
 {{$NEXT}}
 
+0.09 2017-02-28T10:25:17Z
+        - repackage with Minilla (#1)
+
 0.08
         - override SSL_verifycn_name
 

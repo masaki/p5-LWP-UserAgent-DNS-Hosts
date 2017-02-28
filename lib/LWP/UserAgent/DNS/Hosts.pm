@@ -7,7 +7,7 @@ use Carp;
 use LWP::Protocol;
 use Scope::Guard qw(guard);
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 $VERSION = eval $VERSION;
 
 our @Protocols = qw(http https);
