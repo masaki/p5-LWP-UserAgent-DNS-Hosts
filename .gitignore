@@ -14,3 +14,11 @@ inc/
 cover_db/
 nytprof.out
 *.sw[po]
+/LWP-UserAgent-DNS-Hosts-*
+/.build
+/_build_params
+/Build
+/Build.bat
+!Build/
+!META.json
+!LICENSE
