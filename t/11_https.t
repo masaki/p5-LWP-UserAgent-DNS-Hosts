@@ -1,6 +1,6 @@
 use strict;
 use Test::More;
-use Test::Fake::HTTPD 0.06;
+use Test::Fake::HTTPD 0.08;
 use LWP::UserAgent;
 use LWP::UserAgent::DNS::Hosts;
 
@@ -23,6 +23,11 @@ sub _uri {
 my $ua = LWP::UserAgent->new(
     ssl_opts => { SSL_verify_mode => 0, verify_hostname => 0 },
 );
+
+# need SSL options for HTTP::Daemon::SSL
+extra_daemon_args
+    SSL_key_file  => 'certs/server-key.pem',
+    SSL_cert_file => 'certs/server-cert.pem';
 
 my $httpd = run_https_server {
     my $req = shift;

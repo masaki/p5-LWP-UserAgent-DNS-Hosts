@@ -71,7 +71,7 @@
          "web" : "https://github.com/masaki/p5-LWP-UserAgent-DNS-Hosts"
       }
    },
-   "version" : "0.10",
+   "version" : "0.11",
    "x_authority" : "cpan:MASAKI",
    "x_contributors" : [
       "Tatsuhiko Miyagawa <miyagawa@bulknews.net>",
