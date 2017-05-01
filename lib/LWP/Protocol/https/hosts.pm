@@ -14,6 +14,7 @@ sub _extra_sock_opts {
             PeerAddr          => $peer_addr,
             Host              => $host,
             SSL_verifycn_name => $host,
+            SSL_hostname      => $host, # for SNI
         );
     }
 
