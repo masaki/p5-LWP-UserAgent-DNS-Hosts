@@ -2,6 +2,9 @@ Revision history for Perl extension LWP::UserAgent::DNS::Hosts
 
 {{$NEXT}}
 
+0.12 2017-05-01T05:54:56Z
+        - set SSL_hostname for SNI (#4)
+
 0.11 2017-03-04T07:24:34Z
         - fix t/11_https.t (#3)
 
