@@ -92,9 +92,9 @@
    "x_authority" : "cpan:MASAKI",
    "x_contributors" : [
       "Anirvan Chatterjee <anirvan@users.noreply.github.com>",
-      "Masaki Nakagawa <masaki.nakagawa@gmail.com>",
       "Petr Písař <ppisar@redhat.com>",
-      "Tatsuhiko Miyagawa <miyagawa@bulknews.net>"
+      "Tatsuhiko Miyagawa <miyagawa@bulknews.net>",
+      "ikasam_a <masaki.nakagawa@gmail.com>"
    ],
    "x_serialization_backend" : "JSON::PP version 4.04",
    "x_static_install" : 1
